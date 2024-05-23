@@ -17,31 +17,36 @@ print("5. Lazer")
 print("6. Outros")
 
 # Escolha do usuário
-valor = input("----> Escolha uma das opções: ")
+valor = input("----> Escolha uma das categorias: ")
 # Atribuição dos valores de despesa
 if valor == "1":
     despesa_alimentacao = float(input("Insira um valor: "))
-
+    descricao = input(str("Descrição: "))
     print(f"A sua despesa com alimentação é de {despesa_alimentacao} R$")
 
 elif valor == "2":
     despesa_transportecarro = float(input("Insira um valor: "))
+    descricao = input(str("Descrição: "))
     print(f"A sua despesa com transporte/carro é de {despesa_transportecarro} R$")
 
 elif valor == "3":
     despesa_habitacaomoradia = float(input("Insira um valor: "))
+    descricao = input(str("Descrição: "))
     print(f"A sua despesa com habitação/moradia é de {despesa_habitacaomoradia} R$")
 
 elif valor == "4":
     despesa_educacao = float(input("Insira um valor: "))
+    descricao = input(str("Descrição: "))
     print(f"A sua despesa com educação é de {despesa_educacao} R$")
 
 elif valor == "5":
     despesa_lazer = float(input("Insira um valor: "))
+    descricao = input(str("Descrição: "))
     print(f"A sua despesa com lazer é de {despesa_lazer} R$")
 
 elif valor == "6":
     despesa_outros = float(input("Insira um valor: "))
+    descricao = input(str("Descrição: "))
     print(f"A sua despesa com outros é de {despesa_outros} R$")
 
 else:
@@ -54,6 +59,7 @@ dados_receita = {
     "despesaeducacao": despesa_educacao,
     "despesalazer": despesa_lazer,
     "despesaoutros": despesa_outros,
+    "Descricao:" : descricao
 }
 
 print(dados_receita)
@@ -74,21 +80,19 @@ dados.append({usuario_id: dados_receita})
 with open('dados.json', 'w') as arquivo:
     json.dump(dados, arquivo, indent=4)
 
-
 # Pergunta se o usuário deseja excluir os dados
 excluir = input("Deseja excluir seus dados S/N? ")
-if (excluir == 'S'):
-    del dados[-1]
-with open('dados.json', 'w') as arquivo:
 
-    json.dump(dados, arquivo, indent=4) 
+if excluir == 'S':
+    del dados[-1]
+    with open('dados.json', 'w') as arquivo:
+        json.dump(dados, arquivo, indent=4)
 
 # Pergunta se o usuário deseja modificar os dados
-if(excluir == 'N'):
-    modificar_dados = input("Deseja modificar seus dados S/N? ")
+modificar_dados = input("Deseja modificar seus dados S/N? ")
 
-    if modificar_dados == 'S':
-        print("1. Alimentação")
+if modificar_dados == 'S':
+    print("1. Alimentação")
     print("2. Transporte/carro")
     print("3. Habitação/moradia")
     print("4. Educação")
