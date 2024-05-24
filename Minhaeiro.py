@@ -223,7 +223,6 @@ def main():
     while True:
         menu_inicial()
         opcao_inicial = input("Escolha uma opção: ")
-        global opcao_inicial
         match(opcao_inicial):
             case '1':
                 email_ = input("\nDigite seu email cadastrado: ").lower()
@@ -262,60 +261,60 @@ def main():
                     opcao_modulo_receitas = input("Escolha uma opção: ")
                 elif opcao_modulo == '3':
                         modulo_despesas()
-global valor_inicio_despesas
+'''global valor_inicio_despesas
 valor_inicio_despesas = input("----> Escolha uma das opções: ")
                     
 
 if valor_inicio_despesas == "1":
-                            global despesa_alimentacao
-                            despesa_alimentacao = 0
-                            global despesa_transportecarro
-                            despesa_transportecarro = 0
-                            global despesa_educacao
-                            despesa_educacao = 0
-                            global despesa_lazer
-                            despesa_lazer = 0 
-                            global despesa_outros
-                            despesa_outros = 0
-                            global despesa_habitacaomoradia
-                            despesa_habitacaomoradia = 0
-                            print("1. Alimentação")
-                            print("2. Transporte/carro")
-                            print("3. Habitação/moradia")
-                            print("4. Educação")
-                            print("5. Lazer")
-                            print("6. Outros")
+    global despesa_alimentacao
+    global despesa_educacao
+    global despesa_transportecarro
+    global despesa_lazer
+    global despesa_outros
+    global despesa_habitacaomoradia
+    print("1. Alimentação")
+    print("2. Transporte/carro")
+    print("3. Habitação/moradia")
+    print("4. Educação")
+    print("5. Lazer")
+    print("6. Outros")
 
                             # Escolha do usuário
-                            valor = input("----> Escolha uma das opções: ")
+    valor = input("----> Escolha uma das opções: ")
                             # Atribuição dos valores de despesa
-                            if valor == "1":
+    if valor == "1":
                                 despesa_alimentacao = float(input("Insira um valor: "))
 
                                 print(f"A sua despesa com alimentação é de {despesa_alimentacao} R$")
 
-                            elif valor == "2":
+    elif valor == "2":
                                 despesa_transportecarro = float(input("Insira um valor: "))
                                 print(f"A sua despesa com transporte/carro é de {despesa_transportecarro} R$")
 
-                            elif valor == "3":
+    elif valor == "3":
                                 despesa_habitacaomoradia = float(input("Insira um valor: "))
                                 print(f"A sua despesa com habitação/moradia é de {despesa_habitacaomoradia} R$")
 
-                            elif valor == "4":
+    elif valor == "4":
                                 despesa_educacao = float(input("Insira um valor: "))
                                 print(f"A sua despesa com educação é de {despesa_educacao} R$")
 
-                            elif valor == "5":
+    elif valor == "5":
                                 despesa_lazer = float(input("Insira um valor: "))
                                 print(f"A sua despesa com lazer é de {despesa_lazer} R$")
 
-                            elif valor == "6":
+    elif valor == "6":
                                 despesa_outros = float(input("Insira um valor: "))
                                 print(f"A sua despesa com outros é de {despesa_outros} R$")
 
-                            else:
+    else:
                                 print("Opção inválida!")
+despesa_alimentacao = 0
+despesa_habitacaomoradia = 0
+despesa_transportecarro = 0
+despesa_educacao = 0
+despesa_lazer = 0
+despesa_outros = 0
 dados_receita = {
     "despesaalimentacao": despesa_alimentacao,
     "despesatransportecarro": despesa_transportecarro,
@@ -342,48 +341,10 @@ usuario_id = f"usuario{proximo_usuario}"
 dados.append({usuario_id: dados_receita})
 
 with open('dados.json', 'w') as arquivo:
-    json.dump(dados, arquivo, indent=4)
-
-excluir = input("Deseja excluir seus dados S/N? ")
-if (excluir == 'S'):
-                        del dados[-1]
-with open('dados.json', 'w') as arquivo:
-                        json.dump(dados, arquivo, indent=4) 
-
-if excluir == 'N':
-                        modificar_dados = input("Deseja modificar seus dados S/N? ")
-
-                        if modificar_dados == 'S':
-                            print("1. Alimentação")
-                            print("2. Transporte/carro")
-                            print("3. Habitação/moradia")
-                            print("4. Educação")
-                            print("5. Lazer")
-                            print("6. Outros")
-                            modificar_dados_total = int(input("---> Escolha uma das opções: "))
-
-                            if modificar_dados_total == 1:
-                                valor = float(input("Insira um valor: "))
-
-                                with open('dados.json', 'r') as arquivo:
-                                    dados_receita_total = json.load(arquivo)
-
-                                # Obtendo a chave do último usuário adicionado
-                                ultimo_usuario = list(dados_receita_total[-1].keys())[0]
-                                # Modificando o valor de despesaalimentacao
-                                dados_receita_total[-1][ultimo_usuario]["despesaalimentacao"] = f"Valor modificado: {valor} R$"
-
-                                print("Valor modificado com sucesso!")
-
-                                print(f"Novo valor da despesa de alimentação: {valor} R$")
-
-                                # Salvando os dados modificados de volta no arquivo JSON
-                                with open('dados.json', 'w') as arquivo:
-                                    json.dump(dados_receita_total, arquivo, indent=4)
-global opcao_modulo
+    json.dump(dados, arquivo, indent=4)'''
 elif opcao_modulo == '4':
-modulo_relatório()
-opcao_modulo_relatorio = input("Escolha uma opção: ")
+    modulo_relatório()
+    opcao_modulo_relatorio = input("Escolha uma opção: ")
 
 elif opcao_modulo == '5':
 input("Digite [ENTER] para retornar ao menu anterior.")
