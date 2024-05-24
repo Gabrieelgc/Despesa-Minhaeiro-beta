@@ -28,9 +28,9 @@ def limpar_tela():
 
 #Logar com um usuário cadastrado
 def logar_usuario(email, senha):
-    global id_usuario, usuario_logado 
-    usuario_logado = False
     #Declaração de variáveis globais para utilização fora da função logar_usuario()
+    global id_usuario, usuario_logado 
+
     #Carregando os dados dos usuários cadastrados
     try:
         with open(arquivo_usuarios, 'r') as f:
@@ -46,7 +46,7 @@ def logar_usuario(email, senha):
         menu_inicial()
 
     #Processo de log-in de usuário
-#Inicializa usuario_logado como False
+    usuario_logado = False #Inicializa usuario_logado como False
     if arquivo == True:
         for usuario in usuarios:
             if (usuario['email'] == email) and (usuario['senha'] == senha):
@@ -140,9 +140,9 @@ def excluir_usuario(usuario_id):
 def menu_inicial():
     print (cor.CIANO + "=" *55 + cor.RESET)
     print("  __  __   ___   _  _   _  _     _     ___   ___   ___    ___  ")
-    print(r" |  \/  | |_ _| | \| | | || |   /_\   | __| |_ _| | _ \  / _ \ ")
-    print(r" | |\/| |  | |  | .` | | __ |  / _ \  | _|   | |  |   / | (_) |")
-    print(r" |_|  |_| |___| |_|\_| |_||_| /_/ \_\ |___| |___| |_|_\  \___/ ")
+    print(" |  \/  | |_ _| | \| | | || |   /_\   | __| |_ _| | _ \  / _ \ ")
+    print(" | |\/| |  | |  | .` | | __ |  / _ \  | _|   | |  |   / | (_) |")
+    print(" |_|  |_| |___| |_|\_| |_||_| /_/ \_\ |___| |___| |_|_\  \___/ ")
     print("                                                               ")
     print("                                        ")
     print("         /////--////                    ")
@@ -152,16 +152,17 @@ def menu_inicial():
     print("      //////////  ////*.%%%%%%%%%       ")
     print("       *///      //// (%%%%%%%%%%       ")
     print("          ///__///  %%%%%%%%%%%%%%%*    ")
-    print(r"       %%%%%%%%%%%%%%%%%%%%%\___/%%%%   ")
+    print("       %%%%%%%%%%%%%%%%%%%%%\___/%%%%   ")
     print("      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     print("     /%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     print("   O/ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   ")
     print(" ´´    #%%%%%%%%%%%%%%%%%%%%%%%%%%%%    ")
     print("         %%%%%%%%%%%%%%%%%%%%%%%%%      ")
     print("          %%%%%%%%%%%%%%%%%%%%%%%       ")
-    print(r"          \%%%%/    ***     \%%%/       ")
+    print("          \%%%%/    ***     \%%%/       ")
 
     sleep(5) #Espera 5 segundos
+
     print ("          1 - LOGAR NO SISTEMA ")
     print ("          2 - CRIAR USUÁRIO ")
     print ("          3 - SAIR ")
@@ -217,138 +218,60 @@ def modulo_relatório():
     print("5. LISTAR DESPESAS DE UM USUARIO")
     print("6. VOLTAR AO MENU ANTERIOR")
     print (cor.CIANO + "=" *55 + cor.RESET)
+
 def main():
-    global usuario_logado
-    global opcao_modulo
     while True:
         menu_inicial()
         opcao_inicial = input("Escolha uma opção: ")
+
         match(opcao_inicial):
             case '1':
                 email_ = input("\nDigite seu email cadastrado: ").lower()
                 senha_ = input("Digite a senha cadastrada: ").lower()
                 logar_usuario(email_, senha_)
-            # Entra no menu de módulos se o login for bem-sucedido
+
+                #Entra no menu de módulos
                 while usuario_logado == True:
                     modulos()
-                opcao_modulo = input("Escolha uma opção: ")
-        
-                if opcao_modulo == '1':
-                    modulo_usuario()
-                    opcao_modulo_usuario = input("Escolha uma opção: ")
-                    if opcao_modulo_usuario == '1':
-                        listar_dados_usuario(id_usuario)
-                    elif opcao_modulo_usuario == '2':
-                        nome_novo = input("Digite o novo nome: ")
-                        idade_nova = input("Digite a nova idade: ")
-                        email_novo = input("Digite o novo e-mail: ")
-                        senha_nova = input("Digite a nova senha: ")
-                        modificar_dados_usuario(id_usuario, nome_novo, idade_nova, email_novo, senha_nova)
-                    elif opcao_modulo_usuario == '3':
-                        excluir_usuario(id_usuario)
-                        break
-                    elif opcao_modulo_usuario == '4':
-                        print("\nVoltando ao menu anterior!")
-                        sleep(3)
-                        limpar_tela()
-                    else:
-                        print("\nOpção incorreta!")
-                        print("Retornando ao Menu de Módulos")
-                        sleep(3)
-                        limpar_tela()
-                elif opcao_modulo == '2':
-                    modulo_receitas()
-                    opcao_modulo_receitas = input("Escolha uma opção: ")
-                elif opcao_modulo == '3':
+                    opcao_modulo = input("Escolha uma opção: ")
+
+                    if opcao_modulo == '1':
+                        modulo_usario()
+                        opcao_modulo_usuario = input("Escolha uma opção: ")
+
+                        if opcao_modulo_usuario == '1':
+                            listar_dados_usuario(id_usuario)
+                        elif opcao_modulo_usuario == '2':
+                            nome_novo = input("Digite o novo nome: ")
+                            idade_nova = input("Digite a nova idade: ")
+                            email_novo = input("Digite o novo e-mail: ")
+                            senha_nova = input("Digite a nova senha: ")
+                            modificar_dados_usuario(id_usuario, nome_novo, idade_nova, email_novo, senha_nova)
+                        elif opcao_modulo_usuario == '3':
+                            excluir_usuario(id_usuario)
+                            break
+                        elif opcao_modulo_usuario == '4':
+                            print("\nVoltando ao menu anterior!")
+                            sleep(3)
+                            limpar_tela()
+                        else:
+                            print("\nOpção incorreta!")
+                            print("Retornando ao Menu de Módulos")
+                            sleep(3)
+                            limpar_tela()
+
+                    elif opcao_modulo =='2':
+                        modulo_receitas()
+                        opcao_modulo_receitas = input("Escolha uma opção: ")
+                    elif opcao_modulo == '3':
                         modulo_despesas()
-'''global valor_inicio_despesas
-valor_inicio_despesas = input("----> Escolha uma das opções: ")
-                    
-
-if valor_inicio_despesas == "1":
-    global despesa_alimentacao
-    global despesa_educacao
-    global despesa_transportecarro
-    global despesa_lazer
-    global despesa_outros
-    global despesa_habitacaomoradia
-    print("1. Alimentação")
-    print("2. Transporte/carro")
-    print("3. Habitação/moradia")
-    print("4. Educação")
-    print("5. Lazer")
-    print("6. Outros")
-
-                            # Escolha do usuário
-    valor = input("----> Escolha uma das opções: ")
-                            # Atribuição dos valores de despesa
-    if valor == "1":
-                                despesa_alimentacao = float(input("Insira um valor: "))
-
-                                print(f"A sua despesa com alimentação é de {despesa_alimentacao} R$")
-
-    elif valor == "2":
-                                despesa_transportecarro = float(input("Insira um valor: "))
-                                print(f"A sua despesa com transporte/carro é de {despesa_transportecarro} R$")
-
-    elif valor == "3":
-                                despesa_habitacaomoradia = float(input("Insira um valor: "))
-                                print(f"A sua despesa com habitação/moradia é de {despesa_habitacaomoradia} R$")
-
-    elif valor == "4":
-                                despesa_educacao = float(input("Insira um valor: "))
-                                print(f"A sua despesa com educação é de {despesa_educacao} R$")
-
-    elif valor == "5":
-                                despesa_lazer = float(input("Insira um valor: "))
-                                print(f"A sua despesa com lazer é de {despesa_lazer} R$")
-
-    elif valor == "6":
-                                despesa_outros = float(input("Insira um valor: "))
-                                print(f"A sua despesa com outros é de {despesa_outros} R$")
-
-    else:
-                                print("Opção inválida!")
-despesa_alimentacao = 0
-despesa_habitacaomoradia = 0
-despesa_transportecarro = 0
-despesa_educacao = 0
-despesa_lazer = 0
-despesa_outros = 0
-dados_receita = {
-    "despesaalimentacao": despesa_alimentacao,
-    "despesatransportecarro": despesa_transportecarro,
-    "despesahabitacaomoradia": despesa_habitacaomoradia,
-    "despesaeducacao": despesa_educacao,
-    "despesalazer": despesa_lazer,
-    "despesaoutros": despesa_outros
-}
-                    # Insira o código restante, como salvar os dados no arquivo JSON e manipulação adicional, conforme necessário
-
-                    # Tentativa de leitura do arquivo JSON
-try:
-    with open('dados.json', 'r') as arquivo:
-        
-      dados = json.load(arquivo)
-        
-except FileNotFoundError:
-    dados = []  # Inicializa com uma lista vazia se o arquivo não existir
-
-proximo_usuario = len(dados) + 1
-
-usuario_id = f"usuario{proximo_usuario}"
-
-dados.append({usuario_id: dados_receita})
-
-with open('dados.json', 'w') as arquivo:
-    json.dump(dados, arquivo, indent=4)'''
-elif opcao_modulo == '4':
-    modulo_relatório()
-    opcao_modulo_relatorio = input("Escolha uma opção: ")
-
-elif opcao_modulo == '5':
-input("Digite [ENTER] para retornar ao menu anterior.")
-        break
+                        opcao_modulo_despesas = input("Escolha uma opção: ")
+                    elif opcao_modulo == '4':
+                        modulo_relatório()
+                        opcao_modulo_relatorio = input("Escolha uma opção: ")
+                    elif opcao_modulo == '5':
+                        input("Digite [ENTER] para retornar ao menu anterior.")
+                        break
                     else:
                         print("\nOpção inválida!")
                         sleep(3)
