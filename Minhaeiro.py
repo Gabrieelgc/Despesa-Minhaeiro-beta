@@ -1,8 +1,9 @@
 #Declaração das bibliotecas
-import os
 import json
-from time import sleep
+import os
 from datetime import datetime
+from time import sleep
+
 
 #Classe para manipular a cor dos caracteres
 class cor:
@@ -208,22 +209,95 @@ def modulo_despesas():
     print("4. EXCLUIR DESPESAS")
     print("5. VOLTAR AO MENU ANTERIOR")
 
-def despesas(valor, data, descricao):
+def despesas_alimentacao(valor, data, descricao):
     try:
         with open(arquivo_despesas, 'r') as f:
-            conteudo = f.read()
-            if conteudo.strip() == '':
-                despesas = []
-            else:
-                despesas = json.loads(conteudo)
+            despesas_educacao = json.load(f)  # Carrega o conteúdo do arquivo JSON diretamente em uma variável
     except FileNotFoundError:
-        despesas = []
+        despesas_educacao = []  # Inicializa a lista como vazia se o arquivo não existir
+    except json.JSONDecodeError:  # Adiciona um bloco para tratar arquivos com conteúdo inválido
+        despesas_educacao = []  # Inicializa a lista como vazia se o conteúdo do arquivo for inválido
 
-    dic_despesas = {"Id": id_usuario, "valor": valor, "data": data, "descricao": descricao}
-    despesas.append(dic_despesas)
+    dic_despesas = {"Id": id_usuario, "Despesa Alimentação": valor, "data": data, "descricao": descricao}
+    despesas_educacao.append(dic_despesas)
 
     with open(arquivo_despesas, 'w') as f:
-        json.dump(despesas, f, indent=4)
+        json.dump(despesas_educacao, f, indent=4)
+
+def despesas_transporte(valor, data, descricao):
+    try:
+        with open(arquivo_despesas, 'r') as f:
+            despesas_transporte = json.load(f)  # Carrega o conteúdo do arquivo JSON diretamente em uma variável
+    except FileNotFoundError:
+        despesas_transporte = []  # Inicializa a lista como vazia se o arquivo não existir
+    except json.JSONDecodeError:  # Adiciona um bloco para tratar arquivos com conteúdo inválido
+        despesas_transporte = []  # Inicializa a lista como vazia se o conteúdo do arquivo for inválido
+
+    dic_despesas = {"Id": id_usuario, "Despesa transporte": valor, "data": data, "descricao": descricao}
+    despesas_transporte.append(dic_despesas)
+
+with open(arquivo_despesas, 'w') as f:
+    json.dump(despesas_transporte, f, indent=4)
+
+def despesas_lazer(valor, data, descricao):
+        try:
+            with open(arquivo_despesas, 'r') as f:
+                despesas_lazer = json.load(f)  # Carrega o conteúdo do arquivo JSON diretamente em uma variável
+        except FileNotFoundError:
+            despesas_lazer = []  # Inicializa a lista como vazia se o arquivo não existir
+        except json.JSONDecodeError:  # Adiciona um bloco para tratar arquivos com conteúdo inválido
+            despesas_lazer = []  # Inicializa a lista como vazia se o conteúdo do arquivo for inválido
+
+        dic_despesas = {"Id": id_usuario, "Despesa Lazer": valor, "data": data, "descricao": descricao}
+        despesas_lazer.append(dic_despesas)
+with open(arquivo_despesas, 'w') as f:
+    json.dump(despesas_lazer, f, indent=4)
+
+def despesas_habitacao(valor, data, descricao):
+            try:
+                with open(arquivo_despesas, 'r') as f:
+                    despesas_habitacao = json.load(f)  # Carrega o conteúdo do arquivo JSON diretamente em uma variável
+            except FileNotFoundError:
+                despesas_habitacao = []  # Inicializa a lista como vazia se o arquivo não existir
+            except json.JSONDecodeError:  # Adiciona um bloco para tratar arquivos com conteúdo inválido
+                despesas_habitacao = []  # Inicializa a lista como vazia se o conteúdo do arquivo for inválido
+
+            dic_despesas = {"Id": id_usuario, "Despesa habitacao/moradia": valor, "data": data, "descricao": descricao}
+    
+despesas_habitacao.append(dic_despesas)
+with open(arquivo_despesas, 'w') as f:
+    json.dump(despesas_habitacao, f, indent=4)
+
+def despesas_educacao(valor, data, descricao):
+                try:
+                    with open(arquivo_despesas, 'r') as f:
+                        despesas_educacao = json.load(f)  # Carrega o conteúdo do arquivo JSON diretamente em uma variável
+                except FileNotFoundError:
+                    despesas_educacao = []  # Inicializa a lista como vazia se o arquivo não existir
+                except json.JSONDecodeError:  # Adiciona um bloco para tratar arquivos com conteúdo inválido
+                    despesas_educacao = []  # Inicializa a lista como vazia se o conteúdo do arquivo for inválido
+
+                dic_despesas = {"Id": id_usuario, "Despesa Educação": valor, "data": data, "descricao": descricao}
+                despesas_educacao.append(dic_despesas)
+
+with open(arquivo_despesas, 'w') as f:
+    json.dump(despesas_educacao, f, indent=4)
+
+def despesas_outros(valor, data, descricao):
+        try:
+            with open(arquivo_despesas, 'r') as f:
+                despesas_outros = json.load(f)  # Carrega o conteúdo do arquivo JSON diretamente em uma variável
+        except FileNotFoundError:
+            despesas_outros = []  # Inicializa a lista como vazia se o arquivo não existir
+        except json.JSONDecodeError:  # Adiciona um bloco para tratar arquivos com conteúdo inválido
+            despesas_outros = []  # Inicializa a lista como vazia se o conteúdo do arquivo for inválido
+
+        dic_despesas = {"Id": id_usuario, "Despesa outros": valor, "data": data, "descricao": descricao}
+    
+        despesas_outros.append(dic_despesas)
+    
+with open(arquivo_despesas, 'w') as f:
+        json.dump(despesas_outros, f, indent=4)
 
 
 def modulo_relatório():
@@ -296,17 +370,79 @@ def main():
                         print (cor.CIANO + "=" *55 + cor.RESET)
 
                         if escolha_despesas_final == "1":
-                            data_str = input("Digite a data:")
+                            data_str = input("Digite a data e horário:")
 
-                            def __converter_data(data):
-                                return datetime.strptime(data, "%d/%m/%Y")
+                            def converter_data(data):
+                                return datetime.strptime(data, "%d/%m/%Y %H:%M")
 
-                            data_convertida = __converter_data(data_str)
-                            valorteste = input("Insira um valor: ")
+                            data_convertida = converter_data(data_str)
+                            data_convertida_str = str(data_str)
+                            valorteste = int(input("Insira um valor: "))
                             descricaoteste = input("Insira uma descrição: ")
-                            despesas(valorteste, data_convertida, descricaoteste)
+                            despesas_alimentacao(valorteste, data_convertida_str, descricaoteste)
 
                             print("=" * 55)
+                            if escolha_despesas_final == "2":
+                                data_str = input("Digite a data e horário:")
+
+                                def converter_data(data):
+                                    return datetime.strptime(data, "%d/%m/%Y %H:%M")
+
+                                data_convertida = converter_data(data_str)
+                                data_convertida_str = str(data_str)
+                                valorteste = int(input("Insira um valor: "))
+                                descricaoteste = input("Insira uma descrição: ")
+                                despesas_transporte(valorteste, data_convertida_str, descricaoteste)
+
+                                if escolha_despesas_final == "3":
+                                    data_str = input("Digite a data e horário:")
+
+                                    def converter_data(data):
+                                        return datetime.strptime(data, "%d/%m/%Y %H:%M")
+
+                                    data_convertida = converter_data(data_str)
+                                    data_convertida_str = str(data_str)
+                                    valorteste = int(input("Insira um valor: "))
+                                    descricaoteste = input("Insira uma descrição: ")
+                                    despesas_habitacao(valorteste, data_convertida_str, descricaoteste)
+
+                                if escolha_despesas_final == "4":
+                                    data_str = input("Digite a data e horário:")
+
+                                    def converter_data(data):
+                                        return datetime.strptime(data, "%d/%m/%Y %H:%M")
+
+                                    data_convertida = converter_data(data_str)
+                                    data_convertida_str = str(data_str)
+                                    valorteste = int(input("Insira um valor: "))
+                                    descricaoteste = input("Insira uma descrição: ")
+                                    despesas_educacao(valorteste, data_convertida_str, descricaoteste)
+
+                                if escolha_despesas_final == "5":
+                                    data_str = input("Digite a data e horário:")
+
+                                    def converter_data(data):
+                                        return datetime.strptime(data, "%d/%m/%Y %H:%M")
+
+                                    data_convertida = converter_data(data_str)
+                                    data_convertida_str = str(data_str)
+                                    valorteste = int(input("Insira um valor: "))
+                                    descricaoteste = input("Insira uma descrição: ")
+                                    despesas_lazer(valorteste, data_convertida_str, descricaoteste)
+
+                                if escolha_despesas_final == "6":
+                                    data_str = input("Digite a data e horário:")
+
+                                    def converter_data(data):
+                                        return datetime.strptime(data, "%d/%m/%Y %H:%M")
+
+                                    data_convertida = converter_data(data_str)
+                                    data_convertida_str = str(data_str)
+                                    valorteste = int(input("Insira um valor: "))
+                                    descricaoteste = input("Insira uma descrição: ")
+                                    despesas_outros(valorteste, data_convertida_str, descricaoteste)
+
+                                print("=" * 55)
 
                     elif opcao_modulo == '4':
                         modulo_relatorio()
