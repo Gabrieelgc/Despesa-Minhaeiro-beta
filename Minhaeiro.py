@@ -2,6 +2,7 @@
 import os
 import json
 from time import sleep
+from datetime import datetime
 
 #Classe para manipular a cor dos caracteres
 class cor:
@@ -60,6 +61,7 @@ def logar_usuario(email, senha):
             limpar_tela()
 
 #Criar/cadastrar um usuário
+#Criar/cadastrar um usuário
 def criar_usuario(nome, email, idade, senha):
     #Carrega os dados dos usuários cadastrados
     try:
@@ -71,7 +73,7 @@ def criar_usuario(nome, email, idade, senha):
         usuarios = [] #É criada uma lista de usuários vazia
         existe_arquivo = False #Existência de arquivo é setado como False
 
-    id_usuario_ = len(usuarios) + 1 #Definindo o id do usuário >>>SUBSTITUIR POR ROTINA DE CRIAÇÃO E VERIFICAÇÃO DE ID<<<
+    id_usuario_ = len(usuarios) + 1 #Definindo o id do usuário
 
     #Inicializando o dicionário que irá receber os dados do usuário
     dic_usuario = {"id": id_usuario_, "nome": nome, "idade": idade, "senha": senha, "email": email}
@@ -140,9 +142,9 @@ def excluir_usuario(usuario_id):
 def menu_inicial():
     print (cor.CIANO + "=" *55 + cor.RESET)
     print("  __  __   ___   _  _   _  _     _     ___   ___   ___    ___  ")
-    print(" |  \/  | |_ _| | \| | | || |   /_\   | __| |_ _| | _ \  / _ \ ")
-    print(" | |\/| |  | |  | .` | | __ |  / _ \  | _|   | |  |   / | (_) |")
-    print(" |_|  |_| |___| |_|\_| |_||_| /_/ \_\ |___| |___| |_|_\  \___/ ")
+    print(r" |  \/  | |_ _| | \| | | || |   /_\   | __| |_ _| | _ \  / _ \ ")
+    print(r" | |\/| |  | |  | .` | | __ |  / _ \  | _|   | |  |   / | (_) |")
+    print(r" |_|  |_| |___| |_|\_| |_||_| /_/ \_\ |___| |___| |_|_\  \___/ ")
     print("                                                               ")
     print("                                        ")
     print("         /////--////                    ")
@@ -152,14 +154,14 @@ def menu_inicial():
     print("      //////////  ////*.%%%%%%%%%       ")
     print("       *///      //// (%%%%%%%%%%       ")
     print("          ///__///  %%%%%%%%%%%%%%%*    ")
-    print("       %%%%%%%%%%%%%%%%%%%%%\___/%%%%   ")
+    print(r"       %%%%%%%%%%%%%%%%%%%%%\___/%%%%   ")
     print("      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     print("     /%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     print("   O/ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   ")
     print(" ´´    #%%%%%%%%%%%%%%%%%%%%%%%%%%%%    ")
     print("         %%%%%%%%%%%%%%%%%%%%%%%%%      ")
     print("          %%%%%%%%%%%%%%%%%%%%%%%       ")
-    print("          \%%%%/    ***     \%%%/       ")
+    print(r"          \%%%%/    ***     \%%%/       ")
 
     sleep(5) #Espera 5 segundos
 
@@ -199,14 +201,30 @@ def modulo_receitas():
     print (cor.CIANO + "=" *55 + cor.RESET)
 
 def modulo_despesas():
-    print (cor.CIANO + "=" *55 + cor.RESET)
     print (cor.VERDE + " ---->>> MÓDULO DE DESPESAS <<<---- ")
     print("1. ADICIONAR DESPESA")
     print("2. LISTAR DESPESAS DO USUÁRIO")
     print("3. MODIFICAR DESPESAS")
     print("4. EXCLUIR DESPESAS")
     print("5. VOLTAR AO MENU ANTERIOR")
-    print (cor.CIANO + "=" *55 + cor.RESET)
+
+def despesas(valor, data, descricao):
+    try:
+        with open(arquivo_despesas, 'r') as f:
+            conteudo = f.read()
+            if conteudo.strip() == '':
+                despesas = []
+            else:
+                despesas = json.loads(conteudo)
+    except FileNotFoundError:
+        despesas = []
+
+    dic_despesas = {"Id": id_usuario, "valor": valor, "data": data, "descricao": descricao}
+    despesas.append(dic_despesas)
+
+    with open(arquivo_despesas, 'w') as f:
+        json.dump(despesas, f, indent=4)
+
 
 def modulo_relatório():
     print (cor.CIANO + "=" *55 + cor.RESET)
@@ -222,15 +240,14 @@ def modulo_relatório():
 def main():
     while True:
         menu_inicial()
-        opcao_inicial = input("Escolha uma opção: ")
-
+        opcao_inicial = input("\nEscolha uma opção: ")
         match(opcao_inicial):
             case '1':
                 email_ = input("\nDigite seu email cadastrado: ").lower()
                 senha_ = input("Digite a senha cadastrada: ").lower()
                 logar_usuario(email_, senha_)
 
-                #Entra no menu de módulos
+                # Entra no menu de módulos
                 while usuario_logado == True:
                     modulos()
                     opcao_modulo = input("Escolha uma opção: ")
@@ -260,15 +277,41 @@ def main():
                             sleep(3)
                             limpar_tela()
 
-                    elif opcao_modulo =='2':
+                    elif opcao_modulo == '2':
                         modulo_receitas()
                         opcao_modulo_receitas = input("Escolha uma opção: ")
+                        # Implementação das opções do módulo de receitas
+                        break
                     elif opcao_modulo == '3':
                         modulo_despesas()
-                        opcao_modulo_despesas = input("Escolha uma opção: ")
+                        opcao_modulo_despesas = input("\nEscolha uma opção: ")
+                        print (cor.CIANO + "=" *55 + cor.RESET)
+                        print("1. Alimentação")
+                        print("2. Transporte")
+                        print("3. Habitação/moradia")
+                        print("4. Lazer")
+                        print("5. Educação")
+                        print("6. Outros")
+                        escolha_despesas_final = input("\n----> Escolha uma das categorias: ")
+                        print (cor.CIANO + "=" *55 + cor.RESET)
+
+                        if escolha_despesas_final == "1":
+                            data_str = input("Digite a data:")
+
+                            def __converter_data(data):
+                                return datetime.strptime(data, "%d/%m/%Y")
+
+                            data_convertida = __converter_data(data_str)
+                            valorteste = input("Insira um valor: ")
+                            descricaoteste = input("Insira uma descrição: ")
+                            despesas(valorteste, data_convertida, descricaoteste)
+
+                            print("=" * 55)
+
                     elif opcao_modulo == '4':
-                        modulo_relatório()
+                        modulo_relatorio()
                         opcao_modulo_relatorio = input("Escolha uma opção: ")
+                        # Implementação das opções do módulo de relatórios
                     elif opcao_modulo == '5':
                         input("Digite [ENTER] para retornar ao menu anterior.")
                         break
@@ -279,16 +322,17 @@ def main():
             case '2':
                 nome_cadastro = input("Digite o seu nome: ").lower()
                 email_cadastro = input("Digite seu email: ").lower()
-                idade_cadastro = input("Digite seua idade: ").lower()
+                idade_cadastro = input("Digite sua idade: ").lower()
                 senha_cadastro = input("Digite uma senha de cadastro: ").lower()
                 criar_usuario(nome_cadastro, email_cadastro, idade_cadastro, senha_cadastro)
 
             case '3':
                 print("Saindo do sistema!")
                 sleep(3)
+                limpar_tela()
                 break
 
-            case __:
+            case _:
                 print("Opção inválida. Tente novamente.")
 
 if __name__ == "__main__":
